@@ -12,7 +12,7 @@ servers:
     description: Local Server
 tags:
   - name: analyzely
-    description: APIs of the DeliverySwab's analyze third party for requesting and managing **deliveries**
+    description: APIs of the DeliverySwab's analize third party for requesting and managing **deliveries**
   - name: supplierly
     description: APIs of the DeliverySwab's supplier third party for requesting and managing **raw material orders**
   - name: bankly
@@ -22,8 +22,8 @@ paths:
     post:
       tags:
         - analyzely
-      summary: Make a request to Analizly
-      description: This API allows to submit a request for a new swab examination
+      summary: Make a request to Analizely
+      description: This API allows to submit a request for a new delivery
       operationId: handleAnalysis
       requestBody:
         description: Details of the customer that made the swab test
@@ -34,13 +34,13 @@ paths:
         required: true
       responses:
         "200":
-          description: The swab examination has been taken over
+          description: The shipment has been taken over
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/Analysis"
         "400":
-          description: Bad request, the SSN is invalid
+          description: Bad request, the address is invalid or not served by Deliverly
       x-swagger-router-controller: Analyzely
   /analyzely/analyze/{ssn}:
     get:
@@ -48,7 +48,7 @@ paths:
         - analyzely
       summary: Get details of an existing swab analysis request
       description: This API allows to get details about a analysis request
-      operationId: getDeliveryDetails
+      operationId: getAnalysisDetails
       parameters:
         - name: ssn
           in: path
@@ -67,14 +67,14 @@ paths:
                 $ref: "#/components/schemas/Analysis"
         "404":
           description: Delivery not found
-      x-swagger-router-controller: Deliverly
+      x-swagger-router-controller: Analyzely
   /supplierly/swabs:
     get:
       tags:
         - supplierly
       summary: Get the available swabs
       description: This API allows to get the available swabs
-      operationId: getCatalogue
+      operationId: getSwabs
       responses:
         "200":
           description: Swabs
@@ -139,7 +139,7 @@ components:
           type: string
         mail:
           type: string
-        SSN:
+        ssn:
           type: string
         date:
           type: string
@@ -147,7 +147,7 @@ components:
         name: Mario
         surname: Rossi
         mail: mario.rossi100@gmail.it
-        SSN: MRARSS97H28C933E
+        ssn: MRARSS97H28C933E
         date: 28/6/2022
     Analysis:
       properties:
@@ -168,15 +168,15 @@ components:
           type: string
         mail:
           type: string
-        SSN:
+        ssn:
           type: string
         date:
           type: string
       example:
         name: Mario
         surname: Rossi
-        mail: mario.rossi100@gmail.it
-        SSN: MRARSS97H28C933E
+        mail: mario.rossi100@gmail.com
+        ssn: MRARSS97H28C933E
         date: 28/6/2022
         status: terminated
         swabresult: negative

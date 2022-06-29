@@ -7,25 +7,20 @@
  * id Integer Delivery identifier
  * returns Delivery
  **/
-exports.getAnalysisDetails = function (SSN) {
+exports.getAnalysisDetails = function (ssn) {
   return new Promise(function (resolve, reject) {
     var analysis = [
       {
         name: "Mario",
         surname: "Rossi",
         mail: "mario.rossi100@gmail.com",
-        SSN: "MRARSS97H28C933E",
+        ssn: "MRARSS97H28C933E",
         date: "28/6/2022",
         status: "terminated",
         swabresult: "negative",
       },
     ];
-    for (element of analysis) {
-      if (element.SSN === SSN) {
-        resolve(element);
-      }
-      resolve(analysis[0]);
-    }
+    resolve(analysis[0]);
   });
 };
 
@@ -42,8 +37,10 @@ exports.handleAnalysis = function (body) {
       name: body.name,
       surname: body.surname,
       mail: body.mail,
-      SSN: body.SSN,
+      ssn: body.ssn,
       date: body.date,
+      status: "processing",
+      swabresult: "not analyzed",
     });
   });
 };

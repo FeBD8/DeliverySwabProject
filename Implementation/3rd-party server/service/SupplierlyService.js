@@ -29,6 +29,7 @@ exports.orderSwabs = function ({ swabs }) {
   return new Promise(function (resolve, reject) {
     var computedPrice = 0;
     const price = 10;
+    console.log(swabs);
     computedPrice += price * swabs.quantity;
     var order = {
       deliveryDate: "01/09/2022",

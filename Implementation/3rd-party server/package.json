@@ -1,5 +1,5 @@
 {
-  "name": "jewelly-s-third-party-apis",
+  "name": "delivery-swab-s-third-party-apis",
   "version": "1.0.0",
   "description": "APIs for requesting and managing **deliveries**,**raw material** orders and **payments**. Details on the interfaces of the services offered by Jewelly's partners are provided below. In particular: **delivery third party, supplier third party, payments third party**.",
   "main": "index.js",

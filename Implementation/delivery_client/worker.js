@@ -29,9 +29,10 @@ client.subscribe("get-swabs", async function ({ task, taskService }) {
     args,
     function (data, response) {
       // parsed response body as js object
+      console.log(data);
       processVariables.set(
         `product`,
-        `Id: ${data.swabs.id}, Unitary price: ${data.swabs.price}€, Availability: ${data.swabs.availability}`
+        `Id: ${data.id}, Unitary price: ${data.price}€, Availability: ${data.availability}`
       );
 
       // raw response
@@ -110,7 +111,20 @@ client.subscribe("post-payment", async function ({ task, taskService }) {
 client.subscribe("post-analysis", async function ({ task, taskService }) {
   const processVariables = new Variables();
   const localVariables = new Variables();
+  const name = task.variables.get("name");
+  const surname = task.variables.get("surname");
+  const SSN = task.variables.get("SSN");
+  const date = task.variables.get("date");
+  const mail = task.variables.get("mail");
+
   var args = {
+    data: {
+      name: name,
+      surname: surname,
+      SSN: SSN,
+      date: date,
+      mail: mail,
+    },
     headers: { "Content-Type": "application/json" },
   };
 
@@ -122,7 +136,6 @@ client.subscribe("post-analysis", async function ({ task, taskService }) {
       // parsed response body as js object
       processVariables.set("name", data.name);
       processVariables.set("surname", data.surname);
-      processVariables.set("mail", data.mail);
       processVariables.set("SSN", data.SSN);
       processVariables.set("date", data.date);
       processVariables.set("mail", data.mail);
@@ -138,16 +151,20 @@ client.subscribe("post-analysis", async function ({ task, taskService }) {
   );
 });
 
-client.subscribe("post-result", async function ({ task, taskService }) {
+client.subscribe("get-result", async function ({ task, taskService }) {
   const processVariables = new Variables();
   const localVariables = new Variables();
+  const SSN = task.variables.get("SSN");
   var args = {
+    data: {
+      SSN: SSN,
+    },
     headers: { "Content-Type": "application/json" },
   };
 
   // direct way
-  restclient.post(
-    "http://localhost:9090/analyzely/analyze{ssn}",
+  restclient.get(
+    `http://localhost:9090/analyzely/analyze/"${SSN}"`,
     args,
     function (data, response) {
       processVariables.set("swabResult", data.swabResult);

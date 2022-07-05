@@ -19,11 +19,11 @@
       <bpmn:lane id="Lane_1gg0v6b" name="Production Office">
         <bpmn:flowNodeRef>Activity_1ixc5vc</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Gateway_0obi89b</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Event_1gjxnt8</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_0zp5kx6</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Gateway_0k0la2u</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_0q1u5l7</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_05ivce7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Event_1gjxnt8</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_1h7quoe" name="Purchasing Office">
         <bpmn:flowNodeRef>Activity_0qhd877</bpmn:flowNodeRef>
@@ -95,21 +95,14 @@
       <bpmn:incoming>Flow_1whhucm</bpmn:incoming>
       <bpmn:outgoing>Flow_1viqqsw</bpmn:outgoing>
     </bpmn:userTask>
-    <bpmn:startEvent id="Event_1gjxnt8" camunda:initiator="demo">
-      <bpmn:extensionElements>
-        <camunda:formData>
-          <camunda:formField id="recipient" label="Customer name: " type="string" defaultValue="Demo Verdi" />
-          <camunda:formField id="deliveryAddress" label="Delivery address" type="string" defaultValue="via Pola, 12 - Milano (MI) 22060" />
-          <camunda:formField id="issuedCost" label="Jewel price" type="long" defaultValue="150" />
-          <camunda:formField id="customerIBAN" label="Client bank account details" type="string" defaultValue="IT60-X054-2811-1010-0000-0123-666" />
-        </camunda:formData>
-      </bpmn:extensionElements>
-      <bpmn:outgoing>Flow_0ivaq7p</bpmn:outgoing>
-    </bpmn:startEvent>
     <bpmn:userTask id="Activity_0zp5kx6" name="Receive Swab Stock" camunda:assignee="demo">
       <bpmn:extensionElements>
         <camunda:formData>
-          <camunda:formField id="notification" label="Message" type="string" defaultValue="Swab Stock Received" />
+          <camunda:formField id="notification" label="Message" type="string" defaultValue="Swab Stock Received">
+            <camunda:validation>
+              <camunda:constraint name="readonly" />
+            </camunda:validation>
+          </camunda:formField>
         </camunda:formData>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_1qjrezt</bpmn:incoming>
@@ -120,18 +113,21 @@
     <bpmn:sequenceFlow id="Flow_1viqqsw" sourceRef="Activity_1v98ydw" targetRef="Activity_0weljgf" />
     <bpmn:sequenceFlow id="Flow_0ne0ylg" sourceRef="Activity_0qhd877" targetRef="Activity_119up50" />
     <bpmn:sequenceFlow id="Flow_1whhucm" sourceRef="Activity_19x5w7v" targetRef="Activity_1v98ydw" />
-    <bpmn:sequenceFlow id="Flow_0ivaq7p" sourceRef="Event_1gjxnt8" targetRef="Activity_1ixc5vc" />
     <bpmn:sequenceFlow id="Flow_1kia4kr" name="Resources &#10;not in stock" sourceRef="Gateway_0obi89b" targetRef="Activity_0qhd877">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${!materialAvailability}</bpmn:conditionExpression>
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${!swabAvailability}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="Flow_1860u10" name="Resources in stock" sourceRef="Gateway_0obi89b" targetRef="Gateway_0k0la2u">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${materialAvailability}</bpmn:conditionExpression>
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${swabAvailability}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="Flow_02f3553" sourceRef="Activity_0zp5kx6" targetRef="Gateway_0k0la2u" />
     <bpmn:userTask id="Activity_119up50" name="Select Swab Quantity" camunda:assignee="demo">
       <bpmn:extensionElements>
         <camunda:formData>
-          <camunda:formField id="product" label="Product" type="string" defaultValue="${product}" />
+          <camunda:formField id="product" label="Product" type="string" defaultValue="${product}">
+            <camunda:validation>
+              <camunda:constraint name="readonly" />
+            </camunda:validation>
+          </camunda:formField>
           <camunda:formField id="quantity" label="Quantity" type="long" defaultValue="0" />
         </camunda:formData>
       </bpmn:extensionElements>
@@ -171,17 +167,34 @@
     <bpmn:userTask id="Activity_1euv14r" name="Receive result swab test notification" camunda:assignee="demo">
       <bpmn:extensionElements>
         <camunda:formData>
-          <camunda:formField id="notification" label="Result" type="string" defaultValue="${swabResult}" />
+          <camunda:formField id="notification" label="Result" type="string" defaultValue="${swabResult}">
+            <camunda:validation>
+              <camunda:constraint name="readonly" />
+            </camunda:validation>
+          </camunda:formField>
         </camunda:formData>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_1pmnyf9</bpmn:incoming>
       <bpmn:outgoing>Flow_0gq1slw</bpmn:outgoing>
     </bpmn:userTask>
-    <bpmn:serviceTask id="Activity_1vc4vy2" name="Recovering Customer Result" camunda:type="external" camunda:topic="post-result">
+    <bpmn:serviceTask id="Activity_1vc4vy2" name="Recovering Customer Result" camunda:type="external" camunda:topic="get-result">
       <bpmn:incoming>Flow_1r0tbh9</bpmn:incoming>
       <bpmn:outgoing>Flow_1pmnyf9</bpmn:outgoing>
     </bpmn:serviceTask>
     <bpmn:sequenceFlow id="Flow_1pmnyf9" sourceRef="Activity_1vc4vy2" targetRef="Activity_1euv14r" />
+    <bpmn:startEvent id="Event_1gjxnt8" camunda:initiator="demo">
+      <bpmn:extensionElements>
+        <camunda:formData>
+          <camunda:formField id="name" label="Name: " type="string" defaultValue="Mario" />
+          <camunda:formField id="surname" label="Surname:" type="string" defaultValue="Rossi" />
+          <camunda:formField id="SSN" label="SSN:" type="string" defaultValue="MRARSS97H28C933E" />
+          <camunda:formField id="mail" label="Mail" type="string" defaultValue="mario.rossi@gmail.com" />
+          <camunda:formField id="date" label="Date:" type="string" defaultValue="01/09/2022" />
+        </camunda:formData>
+      </bpmn:extensionElements>
+      <bpmn:outgoing>Flow_0ivaq7p</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_0ivaq7p" sourceRef="Event_1gjxnt8" targetRef="Activity_1ixc5vc" />
   </bpmn:process>
   <bpmn:process id="Process_1d91uti" isExecutable="false">
     <bpmn:laneSet id="LaneSet_067arqx" />
@@ -248,7 +261,7 @@
         <di:waypoint x="490" y="840" />
         <di:waypoint x="570" y="840" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="489" y="846" width="56" height="27" />
+          <dc:Bounds x="472" y="846" width="56" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0ivaq7p_di" bpmnElement="Flow_0ivaq7p">

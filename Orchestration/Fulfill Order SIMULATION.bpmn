@@ -3,15 +3,16 @@
   <bpmn:collaboration id="simul-fulfill-order">
     <bpmn:participant id="Jewelly" name="Jewelly" processRef="fulfill-order" />
     <bpmn:participant id="Participant_0lsagxg" name="Payment Third Party" processRef="Process_1d91uti" />
-    <bpmn:participant id="Participant_0ampwzy" name="Delivery Third Party" processRef="Process_0wxxltw" />
+    <bpmn:participant id="Participant_0ampwzy" name="Hospital  Third Party" processRef="Process_0wxxltw" />
     <bpmn:participant id="Participant_02ctnmg" name="Supplier Third Party" processRef="Process_1ci9vij" />
     <bpmn:messageFlow id="Flow_0ga02gj" name="Swab order" sourceRef="Activity_19x5w7v" targetRef="Participant_02ctnmg" />
     <bpmn:messageFlow id="Flow_1l3svl3" name="Payment" sourceRef="Activity_0weljgf" targetRef="Participant_0lsagxg" />
     <bpmn:messageFlow id="Flow_107kmf1" name="Swab Stock" sourceRef="Participant_02ctnmg" targetRef="Activity_0zp5kx6" />
-    <bpmn:messageFlow id="Flow_1awq02k" name="On delivery notification" sourceRef="Participant_0ampwzy" targetRef="Activity_1euv14r" />
+    <bpmn:messageFlow id="Flow_1awq02k" name="result swab notification" sourceRef="Participant_0ampwzy" targetRef="Activity_1euv14r" />
     <bpmn:messageFlow id="Flow_19pvnz9" name="Material Catalogue" sourceRef="Participant_02ctnmg" targetRef="Activity_0qhd877" />
     <bpmn:messageFlow id="Flow_00bfz97" name="Order bill" sourceRef="Participant_02ctnmg" targetRef="Activity_19x5w7v" />
     <bpmn:messageFlow id="Flow_0tei32j" name="Payment confirmation" sourceRef="Participant_0lsagxg" targetRef="Activity_0weljgf" />
+    <bpmn:messageFlow id="Flow_0b1zogu" name="Send customer data" sourceRef="Activity_1i2e4g8" targetRef="Participant_0ampwzy" />
   </bpmn:collaboration>
   <bpmn:process id="fulfill-order" name="fulfill-order" isExecutable="true">
     <bpmn:laneSet id="LaneSet_1t0z8ou">
@@ -32,14 +33,15 @@
         <bpmn:flowNodeRef>Activity_0weljgf</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_11duocc" name="Orders Office">
+        <bpmn:flowNodeRef>Activity_1i2e4g8</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_06o1uqk</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_1euv14r</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Activity_1i2e4g8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_1vc4vy2</bpmn:flowNodeRef>
       </bpmn:lane>
     </bpmn:laneSet>
     <bpmn:dataStoreReference id="DataStoreReference_0uy5r62" name="Order DB" />
     <bpmn:dataStoreReference id="DataStoreReference_0la2ib7" name="Raw Material DB" />
-    <bpmn:userTask id="Activity_1ixc5vc" name="Check Swab Availabikity" camunda:assignee="demo">
+    <bpmn:userTask id="Activity_1ixc5vc" name="Check Swab Availability" camunda:assignee="demo">
       <bpmn:extensionElements>
         <camunda:formData>
           <camunda:formField id="swabAvailability" label="Are there any swab stock left?" type="boolean" />
@@ -73,17 +75,17 @@
     <bpmn:userTask id="Activity_1v98ydw" name="Analyze Supplier Response" camunda:assignee="demo">
       <bpmn:extensionElements>
         <camunda:formData>
-          <camunda:formField id="date" label="Swab delivery date: " type="string" defaultValue="01/09/2022">
+          <camunda:formField id="deliveryDate" label="Swab delivery date: " type="string" defaultValue="${deliveryDate}">
             <camunda:validation>
               <camunda:constraint name="readonly" />
             </camunda:validation>
           </camunda:formField>
-          <camunda:formField id="cost" label="Swab cost:" type="long" defaultValue="${quantity}*10">
+          <camunda:formField id="cost" label="Swab cost:" type="long" defaultValue="${stockCost}">
             <camunda:validation>
               <camunda:constraint name="readonly" />
             </camunda:validation>
           </camunda:formField>
-          <camunda:formField id="iban" label="Payment bank account:" type="string" defaultValue="${materialIban}">
+          <camunda:formField id="iban" label="Payment bank account:" type="string" defaultValue="${iban}">
             <camunda:validation>
               <camunda:constraint name="readonly" />
             </camunda:validation>
@@ -130,7 +132,7 @@
       <bpmn:extensionElements>
         <camunda:formData>
           <camunda:formField id="product" label="Product" type="string" defaultValue="${product}" />
-          <camunda:formField id="quantity" label="Quantity" type="enum" defaultValue="0" />
+          <camunda:formField id="quantity" label="Quantity" type="long" defaultValue="0" />
         </camunda:formData>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_0ne0ylg</bpmn:incoming>
@@ -158,23 +160,28 @@
       <bpmn:outgoing>Flow_1plk3zi</bpmn:outgoing>
     </bpmn:serviceTask>
     <bpmn:sequenceFlow id="Flow_0gq1slw" sourceRef="Activity_1euv14r" targetRef="Event_06o1uqk" />
-    <bpmn:endEvent id="Event_06o1uqk">
-      <bpmn:incoming>Flow_0gq1slw</bpmn:incoming>
-    </bpmn:endEvent>
-    <bpmn:sequenceFlow id="Flow_1r0tbh9" sourceRef="Activity_1i2e4g8" targetRef="Activity_1euv14r" />
-    <bpmn:userTask id="Activity_1euv14r" name="Receive result swab test notification" camunda:assignee="demo">
-      <bpmn:extensionElements>
-        <camunda:formData>
-          <camunda:formField id="notification" label="Result" type="string" defaultValue="NEGATIVE" />
-        </camunda:formData>
-      </bpmn:extensionElements>
-      <bpmn:incoming>Flow_1r0tbh9</bpmn:incoming>
-      <bpmn:outgoing>Flow_0gq1slw</bpmn:outgoing>
-    </bpmn:userTask>
-    <bpmn:serviceTask id="Activity_1i2e4g8" name="Swab Analysis" camunda:type="external" camunda:topic="post-payment">
+    <bpmn:sequenceFlow id="Flow_1r0tbh9" sourceRef="Activity_1i2e4g8" targetRef="Activity_1vc4vy2" />
+    <bpmn:serviceTask id="Activity_1i2e4g8" name="Gathering Customer data" camunda:type="external" camunda:topic="post-analysis">
       <bpmn:incoming>Flow_1plk3zi</bpmn:incoming>
       <bpmn:outgoing>Flow_1r0tbh9</bpmn:outgoing>
     </bpmn:serviceTask>
+    <bpmn:endEvent id="Event_06o1uqk">
+      <bpmn:incoming>Flow_0gq1slw</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:userTask id="Activity_1euv14r" name="Receive result swab test notification" camunda:assignee="demo">
+      <bpmn:extensionElements>
+        <camunda:formData>
+          <camunda:formField id="notification" label="Result" type="string" defaultValue="${swabResult}" />
+        </camunda:formData>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1pmnyf9</bpmn:incoming>
+      <bpmn:outgoing>Flow_0gq1slw</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:serviceTask id="Activity_1vc4vy2" name="Recovering Customer Result" camunda:type="external" camunda:topic="post-result">
+      <bpmn:incoming>Flow_1r0tbh9</bpmn:incoming>
+      <bpmn:outgoing>Flow_1pmnyf9</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="Flow_1pmnyf9" sourceRef="Activity_1vc4vy2" targetRef="Activity_1euv14r" />
   </bpmn:process>
   <bpmn:process id="Process_1d91uti" isExecutable="false">
     <bpmn:laneSet id="LaneSet_067arqx" />
@@ -203,8 +210,8 @@
         <di:waypoint x="2020" y="350" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0gq1slw_di" bpmnElement="Flow_0gq1slw">
-        <di:waypoint x="2120" y="350" />
-        <di:waypoint x="2212" y="350" />
+        <di:waypoint x="2270" y="350" />
+        <di:waypoint x="2332" y="350" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1plk3zi_di" bpmnElement="Flow_1plk3zi">
         <di:waypoint x="1790" y="570" />
@@ -270,6 +277,10 @@
         <di:waypoint x="1170" y="670" />
         <di:waypoint x="1190" y="670" />
       </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1pmnyf9_di" bpmnElement="Flow_1pmnyf9">
+        <di:waypoint x="2120" y="350" />
+        <di:waypoint x="2170" y="350" />
+      </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="DataStoreReference_0uy5r62_di" bpmnElement="DataStoreReference_0uy5r62">
         <dc:Bounds x="295" y="645" width="50" height="50" />
         <bpmndi:BPMNLabel>
@@ -318,14 +329,17 @@
       <bpmndi:BPMNShape id="Activity_05ivce7_di" bpmnElement="Activity_05ivce7">
         <dc:Bounds x="1690" y="530" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_06o1uqk_di" bpmnElement="Event_06o1uqk">
-        <dc:Bounds x="2212" y="332" width="36" height="36" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1k6tgq5_di" bpmnElement="Activity_1euv14r">
-        <dc:Bounds x="2020" y="310" width="100" height="80" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1i2e4g8_di" bpmnElement="Activity_1i2e4g8">
         <dc:Bounds x="1870" y="310" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_06o1uqk_di" bpmnElement="Event_06o1uqk">
+        <dc:Bounds x="2332" y="332" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1k6tgq5_di" bpmnElement="Activity_1euv14r">
+        <dc:Bounds x="2170" y="310" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1vc4vy2_di" bpmnElement="Activity_1vc4vy2">
+        <dc:Bounds x="2020" y="310" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Participant_0lsagxg_di" bpmnElement="Participant_0lsagxg" isHorizontal="true">
         <dc:Bounds x="160" y="1090" width="2394" height="100" />
@@ -366,10 +380,10 @@
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1awq02k_di" bpmnElement="Flow_1awq02k">
-        <di:waypoint x="2070" y="200" />
-        <di:waypoint x="2070" y="310" />
+        <di:waypoint x="2220" y="200" />
+        <di:waypoint x="2220" y="310" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="2002" y="217" width="56" height="27" />
+          <dc:Bounds x="2152" y="217" width="56" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_19pvnz9_di" bpmnElement="Flow_19pvnz9">
@@ -391,6 +405,13 @@
         <di:waypoint x="1120" y="880" />
         <bpmndi:BPMNLabel>
           <dc:Bounds x="1130" y="916" width="60" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0b1zogu_di" bpmnElement="Flow_0b1zogu">
+        <di:waypoint x="1920" y="310" />
+        <di:waypoint x="1920" y="200" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1832" y="217" width="75" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>

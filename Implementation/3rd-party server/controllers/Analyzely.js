@@ -1,15 +1,15 @@
 "use strict";
 
 var utils = require("../utils/writer.js");
-var Deliverly = require("../service/AnalyzelyService");
+var Analyzely = require("../service/AnalyzelyService");
 
-module.exports.getDeliveryDetails = function getDeliveryDetails(
+module.exports.getAnalysisDetails = function getAnalysisDetails(
   req,
   res,
   next,
   id
 ) {
-  Deliverly.getDeliveryDetails(id)
+  Analyzely.getAnalysisDetails(id)
     .then(function (response) {
       utils.writeJson(res, response);
     })
@@ -18,8 +18,8 @@ module.exports.getDeliveryDetails = function getDeliveryDetails(
     });
 };
 
-module.exports.handleDelivery = function handleDelivery(req, res, next, body) {
-  Deliverly.handleDelivery(body)
+module.exports.handleAnalysis = function handleAnalysis(req, res, next, body) {
+  Analyzely.handleAnalysis(body)
     .then(function (response) {
       utils.writeJson(res, response);
     })

@@ -17,7 +17,7 @@ exports.getAnalysisDetails = function (ssn) {
         ssn: "MRARSS97H28C933E",
         date: "28/6/2022",
         status: "terminated",
-        swabresult: "negative",
+        swabResult: "negative",
       },
     ];
     resolve(analysis[0]);
@@ -40,7 +40,7 @@ exports.handleAnalysis = function (body) {
       ssn: body.ssn,
       date: body.date,
       status: "processing",
-      swabresult: "not analyzed",
+      swabResult: "not analyzed",
     });
   });
 };

@@ -2,26 +2,26 @@
 openapi: 3.0.0
 info:
   title: DeliverySwab's third party APIs
-  description: 'APIs for requesting and managing **analysis**,**swab** orders and **payments**. Details on the interfaces of the services offered by DeliverySwab partners are provided below. In particular: **analysis third party, supplier third party, payments third party**.'
+  description: "APIs for requesting and managing **analysis**,**swab** orders and **payments**. Details on the interfaces of the services offered by DeliverySwab partners are provided below. In particular: **analysis third party, supplier third party, payments third party**."
   license:
     name: Apache 2.0
     url: http://www.apache.org/licenses/LICENSE-2.0.html
   version: 1.0.0
 servers:
-- url: http://localhost:9090/
-  description: Local Server
+  - url: http://localhost:9090/
+    description: Local Server
 tags:
-- name: analyzely
-  description: APIs of the DeliverySwab's analize third party for requesting and managing **analysis**
-- name: supplierly
-  description: APIs of the DeliverySwab's supplier third party for requesting and managing **swab test orders**
-- name: bankly
-  description: APIs of the DeliverySwab's payment third party for requesting and managing **payments**
+  - name: analyzely
+    description: APIs of the DeliverySwab's analize third party for requesting and managing **analysis**
+  - name: supplierly
+    description: APIs of the DeliverySwab's supplier third party for requesting and managing **swab test orders**
+  - name: bankly
+    description: APIs of the DeliverySwab's payment third party for requesting and managing **payments**
 paths:
   /analyzely/analyze:
     post:
       tags:
-      - analyzely
+        - analyzely
       summary: Make a request to Analyzely
       description: This API allows to submit a request for a new delivery
       operationId: handleAnalysis
@@ -30,7 +30,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/AnalysisRequest'
+              $ref: "#/components/schemas/AnalysisRequest"
         required: true
       responses:
         "200":
@@ -38,40 +38,40 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Analysis'
+                $ref: "#/components/schemas/Analysis"
         "400":
           description: Bad request, the address is invalid or not served by Deliverly
       x-swagger-router-controller: Analyzely
   /analyzely/analyze/{ssn}:
     get:
       tags:
-      - analyzely
+        - analyzely
       summary: Get details of an existing swab analysis request
       description: This API allows to get details about a analysis request
       operationId: getAnalysisDetails
       parameters:
-      - name: ssn
-        in: path
-        description: Analysis identifier
-        required: true
-        style: simple
-        explode: false
-        schema:
-          type: string
+        - name: ssn
+          in: path
+          description: Analysis identifier
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
       responses:
         "200":
           description: Analysis details
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Analysis'
+                $ref: "#/components/schemas/Analysis"
         "404":
           description: Delivery not found
       x-swagger-router-controller: Analyzely
   /supplierly/swabs:
     get:
       tags:
-      - supplierly
+        - supplierly
       summary: Get the available swabs
       description: This API allows to get the available swabs
       operationId: getSwabs
@@ -81,12 +81,12 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Swabs'
+                $ref: "#/components/schemas/Swabs"
       x-swagger-router-controller: Supplierly
   /supplierly/order:
     post:
       tags:
-      - supplierly
+        - supplierly
       summary: Place a swab stock order to Supplierly
       description: This API allows to submit a swab stock order
       operationId: orderSwabs
@@ -95,7 +95,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/OrderRequest'
+              $ref: "#/components/schemas/OrderRequest"
         required: true
       responses:
         "200":
@@ -103,14 +103,14 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Order'
+                $ref: "#/components/schemas/Order"
         "400":
           description: Bad request, required materials do not exist or invalid order
       x-swagger-router-controller: Supplierly
   /bankly/payment:
     post:
       tags:
-      - bankly
+        - bankly
       summary: Emit a payment
       description: This API allows to emit a payment
       operationId: emitPayment
@@ -119,7 +119,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/PaymentRequest'
+              $ref: "#/components/schemas/PaymentRequest"
         required: true
       responses:
         "200":
@@ -154,14 +154,14 @@ components:
         status:
           type: string
           enum:
-          - processing
-          - terminated
-        swabresult:
+            - processing
+            - terminated
+        swabResult:
           type: string
           enum:
-          - not analyzed
-          - positive
-          - negative
+            - not analyzed
+            - positive
+            - negative
         name:
           type: string
         surname:
@@ -179,11 +179,11 @@ components:
         SSN: MRARSS97H28C933E
         date: 28/6/2022
         status: terminated
-        swabresult: negative
+        swabResult: negative
     OrderRequest:
       properties:
         swabs:
-          $ref: '#/components/schemas/OrderRequest_swabs'
+          $ref: "#/components/schemas/OrderRequest_swabs"
       example:
         swabs:
           id: 0
@@ -197,14 +197,14 @@ components:
         iban:
           type: string
         swabs:
-          $ref: '#/components/schemas/OrderRequest_swabs'
+          $ref: "#/components/schemas/OrderRequest_swabs"
       example:
         deliveryDate: 01/09/2022
         cost: 1050.5
         iban: IT78-F569-3411-1000-0000-0145-123
         swabs:
-        - id: 0
-          quantity: 4
+          - id: 0
+            quantity: 4
     PaymentRequest:
       properties:
         iban:

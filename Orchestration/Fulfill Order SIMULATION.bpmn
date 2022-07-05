@@ -57,7 +57,7 @@
         <bpmn:targetRef>Property_1gg98z5</bpmn:targetRef>
       </bpmn:dataInputAssociation>
     </bpmn:userTask>
-    <bpmn:serviceTask id="Activity_0qhd877" name="Retrieve Materials Catalogue" camunda:type="external" camunda:topic="get-catalogue">
+    <bpmn:serviceTask id="Activity_0qhd877" name="Retrieve Materials Catalogue" camunda:type="external" camunda:topic="get-swabs">
       <bpmn:incoming>Flow_1kia4kr</bpmn:incoming>
       <bpmn:outgoing>Flow_0ne0ylg</bpmn:outgoing>
     </bpmn:serviceTask>
@@ -129,8 +129,8 @@
     <bpmn:userTask id="Activity_119up50" name="Select Swab Quantity" camunda:assignee="demo">
       <bpmn:extensionElements>
         <camunda:formData>
-          <camunda:formField id="Product" label="Product" type="string" defaultValue="Id : 0 - Name : Swab - Price : 10€ - Availability : 7  " />
-          <camunda:formField id="Quantity" label="Quantity" type="enum" defaultValue="${quantity}" />
+          <camunda:formField id="product" label="Product" type="string" defaultValue="${product}" />
+          <camunda:formField id="quantity" label="Quantity" type="enum" defaultValue="0" />
         </camunda:formData>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_0ne0ylg</bpmn:incoming>
@@ -198,6 +198,32 @@
       <bpmndi:BPMNShape id="Lane_1gg0v6b_di" bpmnElement="Lane_1gg0v6b" isHorizontal="true">
         <dc:Bounds x="190" y="510" width="2364" height="220" />
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_1r0tbh9_di" bpmnElement="Flow_1r0tbh9">
+        <di:waypoint x="1970" y="350" />
+        <di:waypoint x="2020" y="350" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0gq1slw_di" bpmnElement="Flow_0gq1slw">
+        <di:waypoint x="2120" y="350" />
+        <di:waypoint x="2212" y="350" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1plk3zi_di" bpmnElement="Flow_1plk3zi">
+        <di:waypoint x="1790" y="570" />
+        <di:waypoint x="1820" y="570" />
+        <di:waypoint x="1820" y="350" />
+        <di:waypoint x="1870" y="350" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0op1i7q_di" bpmnElement="Flow_0op1i7q">
+        <di:waypoint x="1650" y="570" />
+        <di:waypoint x="1690" y="570" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0dp125b_di" bpmnElement="Flow_0dp125b">
+        <di:waypoint x="1515" y="570" />
+        <di:waypoint x="1550" y="570" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1k4fl5q_di" bpmnElement="Flow_1k4fl5q">
+        <di:waypoint x="790" y="840" />
+        <di:waypoint x="810" y="840" />
+      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_02f3553_di" bpmnElement="Flow_02f3553">
         <di:waypoint x="1290" y="670" />
         <di:waypoint x="1490" y="670" />
@@ -230,10 +256,6 @@
         <di:waypoint x="670" y="840" />
         <di:waypoint x="690" y="840" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_1k4fl5q_di" bpmnElement="Flow_1k4fl5q">
-        <di:waypoint x="790" y="840" />
-        <di:waypoint x="810" y="840" />
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1viqqsw_di" bpmnElement="Flow_1viqqsw">
         <di:waypoint x="1030" y="840" />
         <di:waypoint x="1050" y="840" />
@@ -247,28 +269,6 @@
         <di:waypoint x="1170" y="840" />
         <di:waypoint x="1170" y="670" />
         <di:waypoint x="1190" y="670" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0dp125b_di" bpmnElement="Flow_0dp125b">
-        <di:waypoint x="1515" y="570" />
-        <di:waypoint x="1550" y="570" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0op1i7q_di" bpmnElement="Flow_0op1i7q">
-        <di:waypoint x="1650" y="570" />
-        <di:waypoint x="1690" y="570" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_1plk3zi_di" bpmnElement="Flow_1plk3zi">
-        <di:waypoint x="1790" y="570" />
-        <di:waypoint x="1820" y="570" />
-        <di:waypoint x="1820" y="350" />
-        <di:waypoint x="1870" y="350" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0gq1slw_di" bpmnElement="Flow_0gq1slw">
-        <di:waypoint x="2120" y="350" />
-        <di:waypoint x="2212" y="350" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_1r0tbh9_di" bpmnElement="Flow_1r0tbh9">
-        <di:waypoint x="1970" y="350" />
-        <di:waypoint x="2020" y="350" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="DataStoreReference_0uy5r62_di" bpmnElement="DataStoreReference_0uy5r62">
         <dc:Bounds x="295" y="645" width="50" height="50" />
@@ -291,12 +291,6 @@
       <bpmndi:BPMNShape id="Gateway_0obi89b_di" bpmnElement="Gateway_0obi89b" isMarkerVisible="true">
         <dc:Bounds x="465" y="545" width="50" height="50" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0zafekf_di" bpmnElement="Activity_0weljgf">
-        <dc:Bounds x="1050" y="800" width="100" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_04d7xrp_di" bpmnElement="Activity_119up50">
-        <dc:Bounds x="690" y="800" width="100" height="80" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0zlmv27_di" bpmnElement="Activity_19x5w7v">
         <dc:Bounds x="810" y="800" width="100" height="80" />
       </bpmndi:BPMNShape>
@@ -309,8 +303,14 @@
       <bpmndi:BPMNShape id="Activity_1yx0439_di" bpmnElement="Activity_0zp5kx6">
         <dc:Bounds x="1190" y="630" width="100" height="80" />
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_04d7xrp_di" bpmnElement="Activity_119up50">
+        <dc:Bounds x="690" y="800" width="100" height="80" />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Gateway_0k0la2u_di" bpmnElement="Gateway_0k0la2u" isMarkerVisible="true">
         <dc:Bounds x="1465" y="545" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0zafekf_di" bpmnElement="Activity_0weljgf">
+        <dc:Bounds x="1050" y="800" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0q1u5l7_di" bpmnElement="Activity_0q1u5l7">
         <dc:Bounds x="1550" y="530" width="100" height="80" />

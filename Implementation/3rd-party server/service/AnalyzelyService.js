@@ -9,15 +9,13 @@
  **/
 exports.getAnalysisDetails = function (ssn) {
   return new Promise(function (resolve, reject) {
+    console.log("=====Analyzely=====");
+    console.log("> Sending the swab result.");
+    console.log("===================");
     var analysis = [
       {
-        name: "Mario",
-        surname: "Rossi",
-        mail: "mario.rossi100@gmail.com",
-        ssn: "MRARSS97H28C933E",
-        date: "28/6/2022",
         status: "terminated",
-        swabResult: "positive",
+        swabResult: "negative",
       },
     ];
     resolve(analysis[0]);
@@ -31,16 +29,31 @@ exports.getAnalysisDetails = function (ssn) {
  * body DeliveryRequest Details of the delivery to be placed
  * returns Delivery
  **/
-exports.handleAnalysis = function (body) {
+exports.handleAnalysis = function (data) {
   return new Promise(function (resolve, reject) {
-    resolve({
-      name: body.name,
-      surname: body.surname,
-      mail: body.mail,
-      ssn: body.ssn,
-      date: body.date,
-      status: "processing",
-      swabResult: "not analyzed",
-    });
+    data.status = "processing";
+    data.swabResult = "not analyzed";
+    console.log("=====Analyzely=====");
+    console.log(
+      "> Information received about " + data.name + " " + data.surname + ":"
+    );
+    console.log(
+      "-Name: " +
+        data.name +
+        "\n-Surname: " +
+        data.surname +
+        "\n-SSN: " +
+        data.ssn +
+        "\n-Date: " +
+        data.date +
+        "\n-Mail: " +
+        data.mail +
+        "\n-Status: " +
+        data.status +
+        "\n-Result: " +
+        data.swabResult
+    );
+    console.log("===================");
+    resolve(data);
   });
 };

@@ -35,7 +35,7 @@ client.subscribe("get-swabs", async function ({ task, taskService }) {
       );
 
       // raw response
-      console.log("> Swabs availability successfully received ");
+      console.log("> Swabs inventory status received ");
       console.log(
         "> Supplierly swabs:\n-Id: " +
           data.id +
@@ -86,8 +86,9 @@ client.subscribe("post-order", async function ({ task, taskService }) {
 
       // raw response
       console.log(
-        "> Swab order request accepted. \n-Total cost: " +
+        "> Swab order request sent.\n-Total cost: " +
           data.cost +
+          "€" +
           "\n-Delivery date: " +
           date
       );
@@ -104,7 +105,7 @@ client.subscribe("post-payment", async function ({ task, taskService }) {
   const cost = task.variables.get("stockCost");
   const iban = task.variables.get("iban");
   console.log(
-    `Sending payment request to Bankly... \n> Bank account details: \n-IBAN: ${iban}, \n-Amount: ${cost}`
+    `Sending payment request to Bankly... \n> Bank account details: \n-IBAN: ${iban}, \n-Amount: ${cost}€`
   );
   const processVariables = new Variables();
   const localVariables = new Variables();
@@ -117,8 +118,6 @@ client.subscribe("post-payment", async function ({ task, taskService }) {
     "http://localhost:9090/bankly/payment",
     args,
     function (data, response) {
-      // raw response
-      console.log("> Payment successfully issued.");
       // Complete the task
       taskService.complete(task, processVariables, localVariables);
     }
@@ -147,7 +146,7 @@ client.subscribe("post-analysis", async function ({ task, taskService }) {
     },
     headers: { "Content-Type": "application/json" },
   };
-
+  console.log("Sending customer data to Analyzely...");
   // direct way
   restclient.post(
     "http://localhost:9090/analyzely/analyze",
@@ -161,17 +160,6 @@ client.subscribe("post-analysis", async function ({ task, taskService }) {
       processVariables.set("mail", data.mail);
       processVariables.set("status", "processing");
       processVariables.set("swabResult", "not analyzed");
-
-      // raw response
-      console.log("> Data sent for: " + data.name + " " + data.surname);
-      console.log(
-        "> Data:\n-SSN: " +
-          data.ssn +
-          "\n-Date: " +
-          data.date +
-          "\n-Mail: " +
-          data.mail
-      );
 
       // Complete the task
       taskService.complete(task, processVariables, localVariables);
@@ -198,6 +186,7 @@ client.subscribe("get-result", async function ({ task, taskService }) {
       processVariables.set("swabResult", data.swabResult);
 
       // raw response
+      console.log("Waiting Analyzely response...");
       console.log("> Swab Result: " + data.swabResult);
 
       // Complete the task

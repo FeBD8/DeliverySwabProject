@@ -17,7 +17,7 @@ exports.getAnalysisDetails = function (ssn) {
         ssn: "MRARSS97H28C933E",
         date: "28/6/2022",
         status: "terminated",
-        swabResult: "negative",
+        swabResult: "positive",
       },
     ];
     resolve(analysis[0]);

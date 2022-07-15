@@ -2,7 +2,7 @@
 <bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_1vy64ka" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="4.12.0" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.14.0">
   <bpmn:collaboration id="Collaboration_0a1hg99">
     <bpmn:participant id="Participant_1576xhy" name="Customer" processRef="Process_1j6lg62" />
-    <bpmn:participant id="Participant_02r73y3" name="Jewelly" processRef="Process_0uqrdu7" />
+    <bpmn:participant id="Participant_02r73y3" name="DeliverySwab" processRef="Process_0uqrdu7" />
     <bpmn:messageFlow id="Flow_0atkns0" name="Registration form" sourceRef="Participant_1576xhy" targetRef="Event_1a2wplo" />
     <bpmn:messageFlow id="Flow_1nmjzlh" name="Error" sourceRef="Activity_0vhip9h" targetRef="Participant_1576xhy" />
     <bpmn:messageFlow id="Flow_02nvqrn" name="Error" sourceRef="Activity_1j6kp1y" targetRef="Participant_1576xhy" />

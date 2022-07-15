@@ -14,6 +14,9 @@ exports.getSwabs = function () {
       price: 10,
       availability: 100,
     };
+    console.log("=====Supplierly=====");
+    console.log("> Swabs inventory status sent ");
+    console.log("====================");
     resolve(swabStock);
   });
 };
@@ -29,7 +32,6 @@ exports.orderSwabs = function ({ swabs }) {
   return new Promise(function (resolve, reject) {
     var computedPrice = 0;
     const price = 10;
-    console.log(swabs);
     computedPrice += price * swabs.quantity;
     var order = {
       deliveryDate: "01/09/2022",
@@ -37,6 +39,10 @@ exports.orderSwabs = function ({ swabs }) {
       iban: "IT78-F569-3411-1000-0000-0145-123",
       swabs: swabs,
     };
+    console.log("=====Supplierly=====");
+    console.log("> Swab order request received.");
+    console.log("> Ordered swabs: " + swabs.quantity);
+    console.log("====================");
     resolve(order);
   });
 };

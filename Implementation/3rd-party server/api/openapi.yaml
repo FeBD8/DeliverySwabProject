@@ -139,7 +139,7 @@ components:
           type: string
         mail:
           type: string
-        SSN:
+        ssn:
           type: string
         date:
           type: string
@@ -147,7 +147,7 @@ components:
         name: Mario
         surname: Rossi
         mail: mario.rossi100@gmail.it
-        SSN: MRARSS97H28C933E
+        ssn: MRARSS97H28C933E
         date: 28/6/2022
     Analysis:
       properties:
@@ -168,7 +168,7 @@ components:
           type: string
         mail:
           type: string
-        SSN:
+        ssn:
           type: string
         date:
           type: string
@@ -176,7 +176,7 @@ components:
         name: Mario
         surname: Rossi
         mail: mario.rossi100@gmail.com
-        SSN: MRARSS97H28C933E
+        ssn: MRARSS97H28C933E
         date: 28/6/2022
         status: terminated
         swabResult: negative

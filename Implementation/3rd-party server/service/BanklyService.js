@@ -7,9 +7,11 @@
  * body PaymentRequest Details of the payment to be placed
  * no response value expected for this operation
  **/
-exports.emitPayment = function (body) {
+exports.emitPayment = function (data) {
   return new Promise(function (resolve, reject) {
-    // emit payment
+    console.log("=======Bankly=======");
+    console.log("> Payment issued: " + data.amount + "€");
+    console.log("====================");
     resolve();
   });
 };

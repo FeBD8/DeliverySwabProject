@@ -54,7 +54,7 @@ client.subscribe("get-swabs", async function ({ task, taskService }) {
 client.subscribe("post-order", async function ({ task, taskService }) {
   // Get process variables
   const q1 = task.variables.get("quantity");
-  const iban = task.variables.get("iban");
+  const iban = "IT78-F569-3411-1000-0000-0145-123";
   const cost = task.variables.get("cost");
   const date = task.variables.get("date");
   console.log(`Sending raw material order request to Supplierly...`);
@@ -80,7 +80,7 @@ client.subscribe("post-order", async function ({ task, taskService }) {
     args,
     function (data, response) {
       // parsed response body as js object
-      processVariables.set("deliveryDate", date);
+      processVariables.set("deliveryDate", "25/8/2022");
       processVariables.set("stockCost", data.cost);
       processVariables.set("iban", iban);
 
@@ -103,7 +103,7 @@ client.subscribe("post-order", async function ({ task, taskService }) {
 client.subscribe("post-payment", async function ({ task, taskService }) {
   // Get process variables
   const cost = task.variables.get("stockCost");
-  const iban = task.variables.get("iban");
+  const iban = "IT78-F569-3411-1000-0000-0145-123";
   console.log(
     `Sending payment request to Bankly... \n> Bank account details: \n-IBAN: ${iban}, \n-Amount: ${cost}€`
   );

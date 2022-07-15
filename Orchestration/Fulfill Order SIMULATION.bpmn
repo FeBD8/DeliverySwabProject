@@ -17,21 +17,21 @@
   <bpmn:process id="fulfill-order" name="fulfill-order" isExecutable="true">
     <bpmn:laneSet id="LaneSet_1t0z8ou">
       <bpmn:lane id="Lane_1gg0v6b" name="Delivery Office">
-        <bpmn:flowNodeRef>Activity_1ixc5vc</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Gateway_0obi89b</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Event_1gjxnt8</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Gateway_0k0la2u</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Event_1gjxnt8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Gateway_0obi89b</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_1ixc5vc</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_0zp5kx6</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_0q1u5l7</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_05ivce7</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_0is9874</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_1h7quoe" name="Purchasing Office">
-        <bpmn:flowNodeRef>Activity_0qhd877</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Activity_19x5w7v</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Activity_1v98ydw</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Activity_119up50</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_0weljgf</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_119up50</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_1v98ydw</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_19x5w7v</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_0qhd877</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_11duocc" name="Analysis Office">
         <bpmn:flowNodeRef>Event_06o1uqk</bpmn:flowNodeRef>
@@ -57,42 +57,116 @@
     <bpmn:sequenceFlow id="Flow_0dp125b" sourceRef="Gateway_0k0la2u" targetRef="Activity_0is9874" />
     <bpmn:sequenceFlow id="Flow_1plk3zi" sourceRef="Activity_05ivce7" targetRef="Activity_1282k5m" />
     <bpmn:sequenceFlow id="Flow_0ivaq7p" sourceRef="Event_1gjxnt8" targetRef="Activity_1ixc5vc" />
-    <bpmn:exclusiveGateway id="Gateway_0k0la2u">
-      <bpmn:incoming>Flow_1860u10</bpmn:incoming>
-      <bpmn:incoming>Flow_02f3553</bpmn:incoming>
-      <bpmn:outgoing>Flow_0dp125b</bpmn:outgoing>
-    </bpmn:exclusiveGateway>
-    <bpmn:startEvent id="Event_1gjxnt8" camunda:initiator="demo">
-      <bpmn:extensionElements>
-        <camunda:formData>
-          <camunda:formField id="name" label="Name: " type="string" defaultValue="Mario" />
-          <camunda:formField id="surname" label="Surname:" type="string" defaultValue="Rossi" />
-          <camunda:formField id="ssn" label="SSN:" type="string" defaultValue="MRARSS97H28C933E" />
-          <camunda:formField id="mail" label="Mail" type="string" defaultValue="mario.rossi@gmail.com" />
-          <camunda:formField id="date" label="Date:" type="string" defaultValue="01/09/2022" />
-          <camunda:formField id="iban" label="Payment bank account:" type="string" defaultValue="IT78-F569-3411-1000-0000-0145-123" />
-        </camunda:formData>
-      </bpmn:extensionElements>
-      <bpmn:outgoing>Flow_0ivaq7p</bpmn:outgoing>
-    </bpmn:startEvent>
-    <bpmn:serviceTask id="Activity_0weljgf" name="Handle Swabs Selection Payment" camunda:type="external" camunda:topic="post-payment">
-      <bpmn:incoming>Flow_1viqqsw</bpmn:incoming>
-      <bpmn:outgoing>Flow_1qjrezt</bpmn:outgoing>
+    <bpmn:sequenceFlow id="Flow_0ee2v40" sourceRef="Activity_0q1u5l7" targetRef="Activity_05ivce7" />
+    <bpmn:sequenceFlow id="Flow_1o4gey4" sourceRef="Activity_0is9874" targetRef="Activity_0q1u5l7" />
+    <bpmn:sequenceFlow id="Flow_1pmnyf9" sourceRef="Activity_1vc4vy2" targetRef="Activity_1euv14r" />
+    <bpmn:sequenceFlow id="Flow_0gq1slw" sourceRef="Activity_1euv14r" targetRef="Event_06o1uqk" />
+    <bpmn:sequenceFlow id="Flow_1hti8lx" sourceRef="Activity_1282k5m" targetRef="Activity_1i2e4g8" />
+    <bpmn:sequenceFlow id="Flow_1y3vc9d" sourceRef="Activity_1i2e4g8" targetRef="Activity_1vc4vy2" />
+    <bpmn:serviceTask id="Activity_1i2e4g8" name="Gathering Customer data" camunda:type="external" camunda:topic="post-analysis">
+      <bpmn:incoming>Flow_1hti8lx</bpmn:incoming>
+      <bpmn:outgoing>Flow_1y3vc9d</bpmn:outgoing>
     </bpmn:serviceTask>
-    <bpmn:userTask id="Activity_119up50" name="Select Swabs Quantity" camunda:assignee="demo">
+    <bpmn:userTask id="Activity_1282k5m" name="Send customer data to the Hospital" camunda:assignee="demo">
       <bpmn:extensionElements>
         <camunda:formData>
-          <camunda:formField id="product" label="Product" type="string" defaultValue="${product}">
+          <camunda:formField id="notification2" label="Message" type="string" defaultValue="Customer data sent to the Hospital">
             <camunda:validation>
               <camunda:constraint name="readonly" />
             </camunda:validation>
           </camunda:formField>
-          <camunda:formField id="quantity" label="Quantity" type="long" defaultValue="0" />
         </camunda:formData>
       </bpmn:extensionElements>
-      <bpmn:incoming>Flow_0ne0ylg</bpmn:incoming>
-      <bpmn:outgoing>Flow_1k4fl5q</bpmn:outgoing>
+      <bpmn:incoming>Flow_1plk3zi</bpmn:incoming>
+      <bpmn:outgoing>Flow_1hti8lx</bpmn:outgoing>
     </bpmn:userTask>
+    <bpmn:serviceTask id="Activity_1vc4vy2" name="Recovering Customer Result" camunda:type="external" camunda:topic="get-result">
+      <bpmn:incoming>Flow_1y3vc9d</bpmn:incoming>
+      <bpmn:outgoing>Flow_1pmnyf9</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:userTask id="Activity_1euv14r" name="Receive result swab test notification" camunda:assignee="demo">
+      <bpmn:extensionElements>
+        <camunda:formData>
+          <camunda:formField id="notification3" label="Swab result:" type="string" defaultValue="${swabResult}">
+            <camunda:validation>
+              <camunda:constraint name="readonly" />
+            </camunda:validation>
+          </camunda:formField>
+        </camunda:formData>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1pmnyf9</bpmn:incoming>
+      <bpmn:outgoing>Flow_0gq1slw</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:userTask id="Activity_0is9874" name="Ready for swab test operation" camunda:assignee="demo">
+      <bpmn:extensionElements>
+        <camunda:formData>
+          <camunda:formField id="notification1" label="Message" type="string" defaultValue="Medical Operator sent">
+            <camunda:validation>
+              <camunda:constraint name="readonly" />
+            </camunda:validation>
+          </camunda:formField>
+        </camunda:formData>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0dp125b</bpmn:incoming>
+      <bpmn:outgoing>Flow_1o4gey4</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:manualTask id="Activity_05ivce7" name="Perform Swab test">
+      <bpmn:incoming>Flow_0ee2v40</bpmn:incoming>
+      <bpmn:outgoing>Flow_1plk3zi</bpmn:outgoing>
+    </bpmn:manualTask>
+    <bpmn:manualTask id="Activity_0q1u5l7" name="Send Medical Operator">
+      <bpmn:incoming>Flow_1o4gey4</bpmn:incoming>
+      <bpmn:outgoing>Flow_0ee2v40</bpmn:outgoing>
+    </bpmn:manualTask>
+    <bpmn:endEvent id="Event_06o1uqk">
+      <bpmn:incoming>Flow_0gq1slw</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:userTask id="Activity_0zp5kx6" name="Receive Swab Stock" camunda:assignee="demo">
+      <bpmn:extensionElements>
+        <camunda:formData>
+          <camunda:formField id="notification" label="Message" type="string" defaultValue="Swab Stock Received">
+            <camunda:validation>
+              <camunda:constraint name="readonly" />
+            </camunda:validation>
+          </camunda:formField>
+        </camunda:formData>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1qjrezt</bpmn:incoming>
+      <bpmn:outgoing>Flow_02f3553</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:dataStoreReference id="DataStoreReference_0uy5r62" name="Order DB" />
+    <bpmn:dataStoreReference id="DataStoreReference_0la2ib7" name="Swabs DB" />
+    <bpmn:userTask id="Activity_1ixc5vc" name="Check Swabs Availability" camunda:assignee="demo">
+      <bpmn:extensionElements>
+        <camunda:formData>
+          <camunda:formField id="swabAvailability" label="Are there any swab stock left?" type="boolean" />
+        </camunda:formData>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0ivaq7p</bpmn:incoming>
+      <bpmn:outgoing>Flow_1esp3rl</bpmn:outgoing>
+      <bpmn:property id="Property_1gg98z5" name="__targetRef_placeholder" />
+      <bpmn:dataInputAssociation id="DataInputAssociation_0389wl1">
+        <bpmn:sourceRef>DataStoreReference_0uy5r62</bpmn:sourceRef>
+        <bpmn:targetRef>Property_1gg98z5</bpmn:targetRef>
+      </bpmn:dataInputAssociation>
+      <bpmn:dataInputAssociation id="DataInputAssociation_08ep65z">
+        <bpmn:sourceRef>DataStoreReference_0la2ib7</bpmn:sourceRef>
+        <bpmn:targetRef>Property_1gg98z5</bpmn:targetRef>
+      </bpmn:dataInputAssociation>
+    </bpmn:userTask>
+    <bpmn:serviceTask id="Activity_0qhd877" name="Retrieve Swabs Availability" camunda:type="external" camunda:topic="get-swabs">
+      <bpmn:incoming>Flow_1kia4kr</bpmn:incoming>
+      <bpmn:outgoing>Flow_0ne0ylg</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:exclusiveGateway id="Gateway_0obi89b">
+      <bpmn:incoming>Flow_1esp3rl</bpmn:incoming>
+      <bpmn:outgoing>Flow_1kia4kr</bpmn:outgoing>
+      <bpmn:outgoing>Flow_1860u10</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:serviceTask id="Activity_19x5w7v" name="Emit Swabs Order" camunda:type="external" camunda:topic="post-order">
+      <bpmn:incoming>Flow_1k4fl5q</bpmn:incoming>
+      <bpmn:outgoing>Flow_1whhucm</bpmn:outgoing>
+    </bpmn:serviceTask>
     <bpmn:userTask id="Activity_1v98ydw" name="Analyze Supplier Response" camunda:assignee="demo">
       <bpmn:extensionElements>
         <camunda:formData>
@@ -116,116 +190,41 @@
       <bpmn:incoming>Flow_1whhucm</bpmn:incoming>
       <bpmn:outgoing>Flow_1viqqsw</bpmn:outgoing>
     </bpmn:userTask>
-    <bpmn:serviceTask id="Activity_19x5w7v" name="Emit Swabs Order" camunda:type="external" camunda:topic="post-order">
-      <bpmn:incoming>Flow_1k4fl5q</bpmn:incoming>
-      <bpmn:outgoing>Flow_1whhucm</bpmn:outgoing>
+    <bpmn:userTask id="Activity_119up50" name="Select Swabs Quantity" camunda:assignee="demo">
+      <bpmn:extensionElements>
+        <camunda:formData>
+          <camunda:formField id="product" label="Product" type="string" defaultValue="${product}">
+            <camunda:validation>
+              <camunda:constraint name="readonly" />
+            </camunda:validation>
+          </camunda:formField>
+          <camunda:formField id="quantity" label="Quantity" type="long" defaultValue="0" />
+        </camunda:formData>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0ne0ylg</bpmn:incoming>
+      <bpmn:outgoing>Flow_1k4fl5q</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:serviceTask id="Activity_0weljgf" name="Handle Swabs Selection Payment" camunda:type="external" camunda:topic="post-payment">
+      <bpmn:incoming>Flow_1viqqsw</bpmn:incoming>
+      <bpmn:outgoing>Flow_1qjrezt</bpmn:outgoing>
     </bpmn:serviceTask>
-    <bpmn:exclusiveGateway id="Gateway_0obi89b">
-      <bpmn:incoming>Flow_1esp3rl</bpmn:incoming>
-      <bpmn:outgoing>Flow_1kia4kr</bpmn:outgoing>
-      <bpmn:outgoing>Flow_1860u10</bpmn:outgoing>
+    <bpmn:startEvent id="Event_1gjxnt8" camunda:initiator="demo">
+      <bpmn:extensionElements>
+        <camunda:formData>
+          <camunda:formField id="name" label="Name: " type="string" defaultValue="Mario" />
+          <camunda:formField id="surname" label="Surname:" type="string" defaultValue="Rossi" />
+          <camunda:formField id="ssn" label="SSN:" type="string" defaultValue="MRARSS97H28C933E" />
+          <camunda:formField id="mail" label="Mail" type="string" defaultValue="mario.rossi@gmail.com" />
+          <camunda:formField id="date" label="Date:" type="string" defaultValue="01/09/2022" />
+        </camunda:formData>
+      </bpmn:extensionElements>
+      <bpmn:outgoing>Flow_0ivaq7p</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:exclusiveGateway id="Gateway_0k0la2u">
+      <bpmn:incoming>Flow_1860u10</bpmn:incoming>
+      <bpmn:incoming>Flow_02f3553</bpmn:incoming>
+      <bpmn:outgoing>Flow_0dp125b</bpmn:outgoing>
     </bpmn:exclusiveGateway>
-    <bpmn:serviceTask id="Activity_0qhd877" name="Retrieve Swabs Availability" camunda:type="external" camunda:topic="get-swabs">
-      <bpmn:incoming>Flow_1kia4kr</bpmn:incoming>
-      <bpmn:outgoing>Flow_0ne0ylg</bpmn:outgoing>
-    </bpmn:serviceTask>
-    <bpmn:userTask id="Activity_1ixc5vc" name="Check Swabs Availability" camunda:assignee="demo">
-      <bpmn:extensionElements>
-        <camunda:formData>
-          <camunda:formField id="swabAvailability" label="Are there any swab stock left?" type="boolean" />
-        </camunda:formData>
-      </bpmn:extensionElements>
-      <bpmn:incoming>Flow_0ivaq7p</bpmn:incoming>
-      <bpmn:outgoing>Flow_1esp3rl</bpmn:outgoing>
-      <bpmn:property id="Property_1gg98z5" name="__targetRef_placeholder" />
-      <bpmn:dataInputAssociation id="DataInputAssociation_0389wl1">
-        <bpmn:sourceRef>DataStoreReference_0uy5r62</bpmn:sourceRef>
-        <bpmn:targetRef>Property_1gg98z5</bpmn:targetRef>
-      </bpmn:dataInputAssociation>
-      <bpmn:dataInputAssociation id="DataInputAssociation_08ep65z">
-        <bpmn:sourceRef>DataStoreReference_0la2ib7</bpmn:sourceRef>
-        <bpmn:targetRef>Property_1gg98z5</bpmn:targetRef>
-      </bpmn:dataInputAssociation>
-    </bpmn:userTask>
-    <bpmn:dataStoreReference id="DataStoreReference_0la2ib7" name="Swabs DB" />
-    <bpmn:dataStoreReference id="DataStoreReference_0uy5r62" name="Order DB" />
-    <bpmn:userTask id="Activity_0zp5kx6" name="Receive Swab Stock" camunda:assignee="demo">
-      <bpmn:extensionElements>
-        <camunda:formData>
-          <camunda:formField id="notification" label="Message" type="string" defaultValue="Swab Stock Received">
-            <camunda:validation>
-              <camunda:constraint name="readonly" />
-            </camunda:validation>
-          </camunda:formField>
-        </camunda:formData>
-      </bpmn:extensionElements>
-      <bpmn:incoming>Flow_1qjrezt</bpmn:incoming>
-      <bpmn:outgoing>Flow_02f3553</bpmn:outgoing>
-    </bpmn:userTask>
-    <bpmn:endEvent id="Event_06o1uqk">
-      <bpmn:incoming>Flow_0gq1slw</bpmn:incoming>
-    </bpmn:endEvent>
-    <bpmn:sequenceFlow id="Flow_0ee2v40" sourceRef="Activity_0q1u5l7" targetRef="Activity_05ivce7" />
-    <bpmn:sequenceFlow id="Flow_1o4gey4" sourceRef="Activity_0is9874" targetRef="Activity_0q1u5l7" />
-    <bpmn:manualTask id="Activity_0q1u5l7" name="Send Medical Operator">
-      <bpmn:incoming>Flow_1o4gey4</bpmn:incoming>
-      <bpmn:outgoing>Flow_0ee2v40</bpmn:outgoing>
-    </bpmn:manualTask>
-    <bpmn:manualTask id="Activity_05ivce7" name="Perform Swab test">
-      <bpmn:incoming>Flow_0ee2v40</bpmn:incoming>
-      <bpmn:outgoing>Flow_1plk3zi</bpmn:outgoing>
-    </bpmn:manualTask>
-    <bpmn:userTask id="Activity_0is9874" name="Ready for swab test operation" camunda:assignee="demo">
-      <bpmn:extensionElements>
-        <camunda:formData>
-          <camunda:formField id="notification1" label="Message" type="string" defaultValue="Medical Operator sent">
-            <camunda:validation>
-              <camunda:constraint name="readonly" />
-            </camunda:validation>
-          </camunda:formField>
-        </camunda:formData>
-      </bpmn:extensionElements>
-      <bpmn:incoming>Flow_0dp125b</bpmn:incoming>
-      <bpmn:outgoing>Flow_1o4gey4</bpmn:outgoing>
-    </bpmn:userTask>
-    <bpmn:sequenceFlow id="Flow_1pmnyf9" sourceRef="Activity_1vc4vy2" targetRef="Activity_1euv14r" />
-    <bpmn:sequenceFlow id="Flow_0gq1slw" sourceRef="Activity_1euv14r" targetRef="Event_06o1uqk" />
-    <bpmn:userTask id="Activity_1euv14r" name="Receive result swab test notification" camunda:assignee="demo">
-      <bpmn:extensionElements>
-        <camunda:formData>
-          <camunda:formField id="notification3" label="Swab result:" type="string" defaultValue="${swabResult}">
-            <camunda:validation>
-              <camunda:constraint name="readonly" />
-            </camunda:validation>
-          </camunda:formField>
-        </camunda:formData>
-      </bpmn:extensionElements>
-      <bpmn:incoming>Flow_1pmnyf9</bpmn:incoming>
-      <bpmn:outgoing>Flow_0gq1slw</bpmn:outgoing>
-    </bpmn:userTask>
-    <bpmn:serviceTask id="Activity_1vc4vy2" name="Recovering Customer Result" camunda:type="external" camunda:topic="get-result">
-      <bpmn:incoming>Flow_1y3vc9d</bpmn:incoming>
-      <bpmn:outgoing>Flow_1pmnyf9</bpmn:outgoing>
-    </bpmn:serviceTask>
-    <bpmn:sequenceFlow id="Flow_1hti8lx" sourceRef="Activity_1282k5m" targetRef="Activity_1i2e4g8" />
-    <bpmn:sequenceFlow id="Flow_1y3vc9d" sourceRef="Activity_1i2e4g8" targetRef="Activity_1vc4vy2" />
-    <bpmn:userTask id="Activity_1282k5m" name="Send customer data to the Hospital" camunda:assignee="demo">
-      <bpmn:extensionElements>
-        <camunda:formData>
-          <camunda:formField id="notification2" label="Message" type="string" defaultValue="Customer data sent to the Hospital">
-            <camunda:validation>
-              <camunda:constraint name="readonly" />
-            </camunda:validation>
-          </camunda:formField>
-        </camunda:formData>
-      </bpmn:extensionElements>
-      <bpmn:incoming>Flow_1plk3zi</bpmn:incoming>
-      <bpmn:outgoing>Flow_1hti8lx</bpmn:outgoing>
-    </bpmn:userTask>
-    <bpmn:serviceTask id="Activity_1i2e4g8" name="Gathering Customer data" camunda:type="external" camunda:topic="post-analysis">
-      <bpmn:incoming>Flow_1hti8lx</bpmn:incoming>
-      <bpmn:outgoing>Flow_1y3vc9d</bpmn:outgoing>
-    </bpmn:serviceTask>
   </bpmn:process>
   <bpmn:process id="Process_1d91uti" isExecutable="false">
     <bpmn:laneSet id="LaneSet_067arqx" />
@@ -249,6 +248,22 @@
       <bpmndi:BPMNShape id="Lane_1gg0v6b_di" bpmnElement="Lane_1gg0v6b" isHorizontal="true">
         <dc:Bounds x="190" y="510" width="2364" height="220" />
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_1y3vc9d_di" bpmnElement="Flow_1y3vc9d">
+        <di:waypoint x="2140" y="350" />
+        <di:waypoint x="2200" y="350" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1hti8lx_di" bpmnElement="Flow_1hti8lx">
+        <di:waypoint x="1990" y="350" />
+        <di:waypoint x="2040" y="350" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0gq1slw_di" bpmnElement="Flow_0gq1slw">
+        <di:waypoint x="2440" y="350" />
+        <di:waypoint x="2472" y="350" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1pmnyf9_di" bpmnElement="Flow_1pmnyf9">
+        <di:waypoint x="2300" y="350" />
+        <di:waypoint x="2340" y="350" />
+      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1o4gey4_di" bpmnElement="Flow_1o4gey4">
         <di:waypoint x="1510" y="570" />
         <di:waypoint x="1540" y="570" />
@@ -260,14 +275,6 @@
       <bpmndi:BPMNEdge id="Flow_0ivaq7p_di" bpmnElement="Flow_0ivaq7p">
         <di:waypoint x="278" y="570" />
         <di:waypoint x="320" y="570" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_1pmnyf9_di" bpmnElement="Flow_1pmnyf9">
-        <di:waypoint x="2300" y="350" />
-        <di:waypoint x="2340" y="350" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0gq1slw_di" bpmnElement="Flow_0gq1slw">
-        <di:waypoint x="2440" y="350" />
-        <di:waypoint x="2472" y="350" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1plk3zi_di" bpmnElement="Flow_1plk3zi">
         <di:waypoint x="1770" y="570" />
@@ -325,14 +332,6 @@
         <di:waypoint x="1170" y="670" />
         <di:waypoint x="1190" y="670" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_1y3vc9d_di" bpmnElement="Flow_1y3vc9d">
-        <di:waypoint x="2140" y="350" />
-        <di:waypoint x="2200" y="350" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_1hti8lx_di" bpmnElement="Flow_1hti8lx">
-        <di:waypoint x="1990" y="350" />
-        <di:waypoint x="2040" y="350" />
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="Gateway_0k0la2u_di" bpmnElement="Gateway_0k0la2u" isMarkerVisible="true">
         <dc:Bounds x="1315" y="545" width="50" height="50" />
       </bpmndi:BPMNShape>
@@ -378,26 +377,26 @@
       <bpmndi:BPMNShape id="Event_06o1uqk_di" bpmnElement="Event_06o1uqk">
         <dc:Bounds x="2472" y="332" width="36" height="36" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1k6tgq5_di" bpmnElement="Activity_1euv14r">
-        <dc:Bounds x="2340" y="310" width="100" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1vc4vy2_di" bpmnElement="Activity_1vc4vy2">
-        <dc:Bounds x="2200" y="310" width="100" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0is9874_di" bpmnElement="Activity_0is9874">
-        <dc:Bounds x="1410" y="530" width="100" height="80" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1aimwjt_di" bpmnElement="Activity_0q1u5l7">
         <dc:Bounds x="1540" y="530" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0ttzesm_di" bpmnElement="Activity_05ivce7">
         <dc:Bounds x="1670" y="530" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1i2e4g8_di" bpmnElement="Activity_1i2e4g8">
-        <dc:Bounds x="2040" y="310" width="100" height="80" />
+      <bpmndi:BPMNShape id="Activity_0is9874_di" bpmnElement="Activity_0is9874">
+        <dc:Bounds x="1410" y="530" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1k6tgq5_di" bpmnElement="Activity_1euv14r">
+        <dc:Bounds x="2340" y="310" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1vc4vy2_di" bpmnElement="Activity_1vc4vy2">
+        <dc:Bounds x="2200" y="310" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1282k5m_di" bpmnElement="Activity_1282k5m">
         <dc:Bounds x="1890" y="310" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1i2e4g8_di" bpmnElement="Activity_1i2e4g8">
+        <dc:Bounds x="2040" y="310" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Participant_0lsagxg_di" bpmnElement="Participant_0lsagxg" isHorizontal="true">
         <dc:Bounds x="160" y="1090" width="2394" height="100" />

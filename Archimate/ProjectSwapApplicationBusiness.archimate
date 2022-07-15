@@ -19,7 +19,7 @@
     <element xsi:type="archimate:BusinessProcess" name="Payment" id="id-538d3f2e35a047d69c00298ae6eeccae"/>
     <element xsi:type="archimate:BusinessProcess" name="Receive Swabs Stock" id="id-c53ab88fb0614515ae24accfe511df2e"/>
     <element xsi:type="archimate:BusinessProcess" name="Send  Medical Operator" id="id-74b4d27b429b4491b78c7ae582f4232f"/>
-    <element xsi:type="archimate:BusinessProcess" name="Receive Customer Swab Sample" id="id-5b48bbd56daf436f9c71f6143c5eaf9c"/>
+    <element xsi:type="archimate:BusinessProcess" name="Deliver Customer Swab Sample to Lab" id="id-5b48bbd56daf436f9c71f6143c5eaf9c"/>
     <element xsi:type="archimate:BusinessProcess" name="Lab Analysis Process" id="id-6dfc1b3c48f84937983e5f89b09a0167"/>
     <element xsi:type="archimate:BusinessProcess" name="Swab Sample Analysis" id="id-385e5b0f853f4821aa96efda4c2e4193"/>
     <element xsi:type="archimate:BusinessProcess" name="Obtain Result" id="id-3934d21644c34b03b29bb3aa095f7725"/>
@@ -243,7 +243,7 @@
           <sourceConnection xsi:type="archimate:Connection" id="id-1ec5e96baba94d40a1344aabbb530ac6" source="id-4fd6079cfb0f49a8888805a4548ec253" target="id-3f690e54cd894ffab0716798182f68a4" archimateRelationship="id-8dcb219f69df49a6bde11ef5f6c3cfb9"/>
         </child>
         <child xsi:type="archimate:DiagramObject" id="id-12306968d9d74a34925119410191eb0b" targetConnections="id-59d7e6330c89475eaa57cc980c624d8b id-8c39cf5515cc44e5943e464208de2ab2 id-ef7e5b0043804b888709f62f5abdcaee" archimateElement="id-5b48bbd56daf436f9c71f6143c5eaf9c">
-          <bounds x="684" y="48" width="120" height="60"/>
+          <bounds x="684" y="36" width="120" height="72"/>
           <sourceConnection xsi:type="archimate:Connection" id="id-f3d339d41e194afd96dd404159970e6e" source="id-12306968d9d74a34925119410191eb0b" target="id-8d89367285e54c9e93a57b32f96324a5" archimateRelationship="id-7f2dd8f506044826845310e6c8509e5a"/>
         </child>
         <child xsi:type="archimate:DiagramObject" id="id-3f690e54cd894ffab0716798182f68a4" targetConnections="id-1949057fa49c46d090cfd5088c497270 id-1ec5e96baba94d40a1344aabbb530ac6 id-78459afa79854c93b2a4a49f05c09b23" archimateElement="id-b9b8970924324fd28e32298dab6e1343">

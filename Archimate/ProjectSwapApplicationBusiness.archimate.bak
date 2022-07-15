@@ -50,7 +50,7 @@
     <element xsi:type="archimate:ApplicationService" name="Resource Management Service" id="id-05375633c1ae4fed9b8b4dbde789086a"/>
     <element xsi:type="archimate:ApplicationComponent" name="Supplier Service Client" id="id-0eef9e9088024d1784666691ddbdbc2b"/>
     <element xsi:type="archimate:ApplicationService" name="Swab Order Service" id="id-79fb29f71ae540fb9cebb9316b58ca38"/>
-    <element xsi:type="archimate:ApplicationComponent" name="Analysis module" id="id-304b9568c4c74c40b6f5c3ff92ab76ca"/>
+    <element xsi:type="archimate:ApplicationComponent" name="Analysis Service Module" id="id-304b9568c4c74c40b6f5c3ff92ab76ca"/>
     <element xsi:type="archimate:ApplicationService" name="Analysis Service" id="id-f0f770e239144987b375bf3f6cb443bd"/>
     <element xsi:type="archimate:ApplicationComponent" name="Home Visit Module" id="id-8d5e86f4e7c34f44b95ac0ed9d17b8d5"/>
     <element xsi:type="archimate:ApplicationService" name="Home Visit Service" id="id-c32e394a108845bbb44492cb5a87d306"/>

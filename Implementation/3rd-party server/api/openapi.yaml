@@ -34,11 +34,11 @@ paths:
         required: true
       responses:
         "200":
-          description: The Swabt test has been taken over
+          description: The Swab test has been taken over
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Analysis"
+                $ref: "#/components/schemas/AnalysisRequest"
         "400":
           description: Bad request, the address is invalid or not served by Deliverly
       x-swagger-router-controller: Analyzely
@@ -66,7 +66,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/Analysis"
         "404":
-          description: Delivery not found
+          description: A problem occurred
       x-swagger-router-controller: Analyzely
   /supplierly/swabs:
     get:
@@ -146,7 +146,7 @@ components:
       example:
         name: Mario
         surname: Rossi
-        mail: mario.rossi100@gmail.it
+        mail: mario.rossi@gmail.it
         ssn: MRARSS97H28C933E
         date: 28/6/2022
     Analysis:
@@ -168,15 +168,12 @@ components:
           type: string
         mail:
           type: string
-        ssn:
-          type: string
         date:
           type: string
       example:
         name: Mario
         surname: Rossi
-        mail: mario.rossi100@gmail.com
-        ssn: MRARSS97H28C933E
+        mail: mario.rossi@gmail.com
         date: 28/6/2022
         status: terminated
         swabResult: negative
@@ -200,7 +197,7 @@ components:
           $ref: "#/components/schemas/OrderRequest_swabs"
       example:
         deliveryDate: 01/09/2022
-        cost: 1050.5
+        cost: 40
         iban: IT78-F569-3411-1000-0000-0145-123
         swabs:
           - id: 0
@@ -227,7 +224,7 @@ components:
       example:
         id: 0
         price: 10
-        availability: 7
+        availability: 100
     OrderRequest_swabs:
       type: object
       properties:

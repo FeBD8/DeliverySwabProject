@@ -10,7 +10,6 @@ exports.getSwabs = function () {
   return new Promise(function (resolve, reject) {
     var swabStock = {
       id: 0,
-      name: "NormalSwab",
       price: 10,
       availability: 100,
     };

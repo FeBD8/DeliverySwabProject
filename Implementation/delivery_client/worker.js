@@ -172,15 +172,12 @@ client.subscribe("get-result", async function ({ task, taskService }) {
   const localVariables = new Variables();
   const ssn = task.variables.get("ssn");
   var args = {
-    data: {
-      ssn: ssn,
-    },
     headers: { "Content-Type": "application/json" },
   };
 
   // direct way
   restclient.get(
-    `http://localhost:9090/analyzely/analyze/"${ssn}"`,
+    `http://localhost:9090/analyzely/analyze/${ssn}`,
     args,
     function (data, response) {
       processVariables.set("swabResult", data.swabResult);

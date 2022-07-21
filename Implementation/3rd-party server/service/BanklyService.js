@@ -11,7 +11,6 @@ exports.emitPayment = function (data) {
   return new Promise(function (resolve, reject) {
     console.log("=======Bankly=======");
     console.log("> Payment issued: " + data.amount + "€");
-    console.log("====================");
     resolve();
   });
 };

@@ -11,7 +11,6 @@ exports.getAnalysisDetails = function (ssn) {
   return new Promise(function (resolve, reject) {
     console.log("=====Analyzely=====");
     console.log("> Sending the swab result.");
-    console.log("===================");
     var analysis = {
       MRARSS97H28C933E: {
         name: "Mario",
@@ -82,7 +81,6 @@ exports.handleAnalysis = function (data) {
         "\n-Result: " +
         data.swabResult
     );
-    console.log("===================");
     resolve(data);
   });
 };

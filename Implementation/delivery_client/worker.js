@@ -57,7 +57,7 @@ client.subscribe("post-order", async function ({ task, taskService }) {
   const iban = "IT78-F569-3411-1000-0000-0145-123";
   const cost = task.variables.get("cost");
   const date = task.variables.get("date");
-  console.log(`Sending raw material order request to Supplierly...`);
+  console.log(`Sending swab order request to Supplierly...`);
   const processVariables = new Variables();
   const localVariables = new Variables();
   var args = {

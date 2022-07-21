@@ -15,7 +15,6 @@ exports.getSwabs = function () {
     };
     console.log("=====Supplierly=====");
     console.log("> Swabs inventory status sent ");
-    console.log("====================");
     resolve(swabStock);
   });
 };
@@ -41,7 +40,6 @@ exports.orderSwabs = function ({ swabs }) {
     console.log("=====Supplierly=====");
     console.log("> Swab order request received.");
     console.log("> Ordered swabs: " + swabs.quantity);
-    console.log("====================");
     resolve(order);
   });
 };

@@ -6,4 +6,4 @@ This project consists in the creation and implementation of an e-service. The se
 - Supplierly(a swab supplier): requesting and managing swab orders for refill.
 - Bankly(a bank): requesting and managing payments.
 
-At hte beggingin we created the #Archimate
+At hte beginning we created the **Archimate** model in which we focused on *Business*(service that are offered to the customer) and *Application*(The external services with which we support the business layer).

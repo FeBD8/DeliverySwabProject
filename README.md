@@ -10,12 +10,14 @@ This project consists in the creation and implementation of an e-service. The se
 ## **Archimate**
 
 At the beginning we created the **Archimate** model in which we focused on *Business*(service that are offered to the customer) and *Application*(The external services with which we support the business layer).
+Complete archimate can be found in [Archimate folder](https://github.com/FeBD8/DeliverySwabProject/tree/main/Archimate)
 
 ![image](https://user-images.githubusercontent.com/48360582/181099747-c1ac24e0-7824-4091-90bb-c1c3184c106e.png)
 
 ## **Coreography and Orchestration**
 
 Then we identified 4 main sub-process on which perform the coreography and orchestration graphs : User Registration, User Login, Receive Order, Fulfill Order. The choreography diagram provides a high-level perspective focused only on the relationships among the organization, but without specifying the internal processes.
+Complete coreography and orchestration graphs can be found respectively in the [Coreography folder](https://github.com/FeBD8/DeliverySwabProject/tree/main/Coreography) and [Orchestration folder](https://github.com/FeBD8/DeliverySwabProject/tree/main/Orchestration)
 
 Example :
 
@@ -37,7 +39,7 @@ This part of the project consists in the development of an _executable_ and _sem
 To run the process follow these steps:
 
 1. Deploy the semplified version of the process to the Camunda Engine
-2. Run the 3rd-party server using `npm start` in the terminal from the [3rd-party server Folder](https://github.com/lucagrammer/process-and-service-design/tree/main/Implementation/3rd-party%20server)
-3. Run the REST client using `node worker.js` in the terminal from the [jewelly client Folder](https://github.com/lucagrammer/process-and-service-design/tree/main/Implementation/jewelly%20client)
+2. Run the 3rd-party server using `npm start` in the terminal from the [3rd-party server Folder](https://github.com/FeBD8/DeliverySwabProject/tree/main/Implementation/3rd-party%20server))
+3. Run the REST client using `node worker.js` in the terminal from the [Delivery client Folder](https://github.com/FeBD8/DeliverySwabProject/tree/main/Implementation/delivery_client)
 4. Start the process from the Camunda Engine
 

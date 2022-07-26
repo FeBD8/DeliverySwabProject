@@ -19,7 +19,7 @@ Complete archimate can be found in [Archimate folder](https://github.com/FeBD8/D
 
 Then we identified 4 main sub-process on which perform the coreography and orchestration graphs : User Registration, User Login, Receive Order, Fulfill Order. The choreography diagram provides a high-level perspective focused only on the relationships among the organization, but without specifying the internal processes.
 
-Complete coreography and orchestration graphs can be found respectively in the [Coreography folder](https://github.com/FeBD8/DeliverySwabProject/tree/main/Coreography) and [Orchestration folder](https://github.com/FeBD8/DeliverySwabProject/tree/main/Orchestration).
+Complete coreography and orchestration graphs can be found respectively in the [Coreography folder](https://github.com/FeBD8/DeliverySwabProject/tree/main/Coreography).
 
 Example :
 
@@ -29,6 +29,8 @@ Example :
 Orchestration concerns the management of activities executed under a common controlling element (the orchestrator). Usually, the boundary of an orchestrator is an organization. 
 
 The orchestrator controls the execution of the business process according to a control-flow model. The control-flow is usually modelled based on a set of patterns.
+
+[Orchestration folder](https://github.com/FeBD8/DeliverySwabProject/tree/main/Orchestration)
 
 Example :
 

@@ -38,7 +38,7 @@ Example :
 
 ## **Executable Process**
 
-This part of the project consists in the development of an _executable_ and _semplified version of a portion_ of the designed processes. We used swagger and the camunda to run the deployed process.
+This part of the project consists in the development of an _executable_ and _semplified(called Fullfill order SIMULATION) version of a portion_ of the designed processes. We used swagger and the camunda to run the deployed process.
 
 To run the process follow these steps:
 

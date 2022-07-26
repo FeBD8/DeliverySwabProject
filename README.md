@@ -15,6 +15,7 @@ At the beginning we created the **Archimate** model in which we focused on *Busi
 Then we identified 4 main sub-process on which perform the coreography and orchestration graphs : User Registration, User Login, Receive Order, Fulfill Order. The choreography diagram provides a high-level perspective focused only on the relationships among the organization, but without specifying the internal processes.
 
 Example :
+
 ![image](https://user-images.githubusercontent.com/48360582/181100307-8ab347fd-a422-41fd-8d72-5d2d3bd626e9.png)
 
 

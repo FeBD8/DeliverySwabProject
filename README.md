@@ -5,3 +5,5 @@ This project consists in the creation and implementation of an e-service. The se
 - Analyzely(the Laboratory): requesting and executing the swab analysis.
 - Supplierly(a swab supplier): requesting and managing swab orders for refill.
 - Bankly(a bank): requesting and managing payments.
+
+At hte beggingin we created the *Archimate*
